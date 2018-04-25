@@ -3,8 +3,11 @@
 namespace app\controllers;
 
 use app\models\Category;
+use app\models\Comment;
+use app\models\CommentForm;
 use app\models\Product;
 use app\models\Tag;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -17,6 +20,9 @@ class CatalogController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Product::find()->active()->orderBy(['id' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 8,
+            ],
         ]);
 
         return $this->render('index', [
@@ -56,9 +62,32 @@ class CatalogController extends Controller
     {
         $model = $this->findProductModel($id);
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getValues()
+        ]);
+
+        $commentForm = new CommentForm();
+
         return $this->render('view', [
             'model' => $model,
+            'dataProvider' => $dataProvider,
+            'commentForm' => $commentForm,
         ]);
+    }
+
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->saveComment($id))
+            {
+               // Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
+                return $this->redirect(['catalog/view','id'=>$id]);
+            }
+        }
     }
 
     /**

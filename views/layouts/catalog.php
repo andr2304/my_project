@@ -8,14 +8,15 @@ use app\widgets\TagsWidget;
 /* @var $content string */
 
 ?>
-<?php $this->beginContent('@app/views/layouts/layout.php'); ?>
+<?php $this->beginContent('@app/views/layouts/main.php'); ?>
+<div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-4">
 
             <?= CategoriesWidget::widget([
                 'category' => isset($this->params['category']) ? $this->params['category'] : null,
             ]) ?>
-            
+
             <?= TagsWidget::widget([
                 'tag' => isset($this->params['tag']) ? $this->params['tag'] : null,
             ]) ?>
@@ -25,4 +26,5 @@ use app\widgets\TagsWidget;
             <?= $content ?>
         </div>
     </div>
+</div>
 <?php $this->endContent() ?>

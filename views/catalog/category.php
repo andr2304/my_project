@@ -9,7 +9,7 @@ use yii\widgets\ListView;
 
 $this->title = $category->name;
 
-$this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['index']];
 
 $crumbs = [];
 $parent = $category;
@@ -23,7 +23,7 @@ $this->params['category'] = $category;
 ?>
 <div class="catalog-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2 class="title text-center"><?= Html::encode($this->title) ?></h2>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

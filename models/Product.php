@@ -95,6 +95,13 @@ class Product extends ActiveRecord
     {
         return $this->hasMany(Value::className(), ['product_id' => 'id']);
     }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComment()
+    {
+        return $this->hasMany(Comment::className(), ['product_id' => 'id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
